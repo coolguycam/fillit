@@ -6,11 +6,37 @@
 /*   By: cdimitro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 11:48:38 by cdimitro          #+#    #+#             */
-/*   Updated: 2019/04/25 16:10:05 by cdimitro         ###   ########.fr       */
+/*   Updated: 2019/04/29 12:51:20 by cdimitro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+char	**get_next_tetra(const int fd)
+{
+	char	**grid;
+	char	*line;
+	int		i;
+
+	i = 0;
+	grid = (char**)malloc(sizeof(char*) * MAX_GRID);
+	while (i < MAX_GRID)
+	{
+		if (get_next_line(fd, &line) == 1)
+			grid[i++] = ft_strdup(line);
+		else
+			error();
+		free(line);
+	}
+	if (get_next_line(fd, &line) == 1)
+		if (!check_newline(line))
+			error();
+	if (!check_char(grid))
+		error();
+	if (!check_hash(grid))
+		error();
+	return (grid);
+}
 
 t_tetra	get_coords(char **grid)
 {
@@ -22,7 +48,7 @@ t_tetra	get_coords(char **grid)
 	i = 0;
 	j = 0;
 	k = 0;
-	while (grid[i][0] != '\0')
+	while (i < MAX_GRID)
 	{
 		while (grid[i][j] != '\0')
 		{
@@ -50,7 +76,7 @@ t_tetra	reset_coords(t_tetra tetra)
 	i = 1;
 	x_temp = tetra.x[0];
 	y_temp = tetra.y[0];
-	while (i < 4)
+	while (i < MAX_GRID)
 	{
 		res.x[i] = tetra.x[i] - x_temp;
 		res.y[i] = tetra.y[i] - y_temp;

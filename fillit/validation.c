@@ -6,11 +6,18 @@
 /*   By: cdimitro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 09:01:28 by cdimitro          #+#    #+#             */
-/*   Updated: 2019/04/24 15:25:20 by cdimitro         ###   ########.fr       */
+/*   Updated: 2019/04/29 12:53:49 by cdimitro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+int		check_newline(char *line)
+{
+	if (line[0] != '\0')
+		return (0);
+	return (1);
+}
 
 int		check_char(char **tetra)
 {
@@ -21,7 +28,7 @@ int		check_char(char **tetra)
 	i = 0;
 	j = 0;
 	hash = 0;
-	while (i < 4)
+	while (i < MAX_GRID)
 	{
 		while (tetra[i][j] != '\0')
 		{
@@ -31,12 +38,42 @@ int		check_char(char **tetra)
 				hash++;
 			j++;
 		}
+		if (j != MAX_GRID)
+			return (0);
 		j = 0;
 		i++;
 	}
-	if (hash != 4)
+	if (hash != MAX_GRID)
 		return (0);
 	return (1);
+}
+
+int		add_count(char **tetra, int i, int j)
+{
+	int count;
+
+	count = 0;
+	if (i < 3)
+	{
+		if (tetra[i + 1][j] == '#')
+			count++;
+	}
+	if (i > 0)
+	{
+		if (tetra[i - 1][j] == '#')
+			count++;
+	}
+	if (j < 3)
+	{
+		if (tetra[i][j + 1] == '#')
+			count++;
+	}
+	if (j > 0)
+	{
+		if (tetra[i][j - 1] == '#')
+			count++;
+	}
+	return (count);
 }
 
 int		check_hash(char **tetra)
@@ -48,22 +85,19 @@ int		check_hash(char **tetra)
 	i = 0;
 	j = 0;
 	count = 0;
-	while (i < 4)
+	while (i < MAX_GRID)
 	{
 		while (tetra[i][j] != '\0')
 		{
-			if (tetra[i][j++] == '#')
-			{
-				(i < 3 && tetra[i + 1][j] == '#') && (count++);
-				(i > 0 && tetra[i - 1][j] == '#') && (count++);
-				(j < 3 && tetra[i][j + 1] == '#') && (count++);
-				(j > 0 && tetra[i][j - 1] == '#') && (count++);
-			}
+			if (tetra[i][j] == '#')
+				count += add_count(tetra, i, j);
+			j++;
 		}
 		j = 0;
 		i++;
 	}
 	if (count == 6 || count == 8)
 		return (1);
-	return (0);
+	else
+		return (0);
 }

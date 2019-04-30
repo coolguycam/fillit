@@ -6,13 +6,13 @@
 /*   By: cdimitro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 13:47:49 by cdimitro          #+#    #+#             */
-/*   Updated: 2019/04/24 15:45:38 by cdimitro         ###   ########.fr       */
+/*   Updated: 2019/04/29 12:54:41 by cdimitro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		backtrack(t_tetra list[26], char **map, int i, int size)
+int		backtrack(t_tetra list[MAX_TETRA], char **map, int i, int size)
 {
 	int		x;
 	int		y;
@@ -59,7 +59,7 @@ char	**resize_map(char **map)
 	return (map);
 }
 
-char	**fillit(char **map, t_tetra list[26], int size)
+char	**fillit(char **map, t_tetra list[MAX_TETRA], int size)
 {
 	while (!backtrack(list, map, 0, size))
 	{
@@ -69,7 +69,7 @@ char	**fillit(char **map, t_tetra list[26], int size)
 	return (map);
 }
 
-void	finish(t_tetra list[26], int num)
+void	finish(t_tetra list[MAX_TETRA], int num)
 {
 	char	**grid;
 	int		size;

@@ -6,7 +6,7 @@
 /*   By: cdimitro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 08:44:16 by cdimitro          #+#    #+#             */
-/*   Updated: 2019/04/25 16:10:15 by cdimitro         ###   ########.fr       */
+/*   Updated: 2019/04/29 16:02:44 by cdimitro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ char	**initial_map(int num)
 {
 	char	**map;
 
-	if (num < 3)
+	if (num < 2)
+		map = make_map(2);
+	else if (num < 3)
 		map = make_map(3);
 	else if (num < 5)
 		map = make_map(4);

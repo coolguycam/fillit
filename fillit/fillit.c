@@ -6,7 +6,7 @@
 /*   By: cdimitro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:35:44 by cdimitro          #+#    #+#             */
-/*   Updated: 2019/04/25 16:11:31 by cdimitro         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:57:26 by cdimitro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,8 @@
 
 void	error(void)
 {
-	ft_putstr("error");
+	ft_putstr("error\n");
 	exit(0);
-}
-
-char	**get_next_tetra(const int fd)
-{
-	char	**grid;
-	char	*line;
-	int		i;
-
-	i = 0;
-	grid = (char**)malloc(sizeof(char*) * 5);
-	while (i < 5)
-	{
-		if (get_next_line(fd, &line) == 1)
-			grid[i++] = ft_strdup(line);
-		else
-			error();
-	}
-	if (grid[4][0] != '\0')
-		error();
-	if (!check_char(grid))
-		error();
-	if (!check_hash(grid))
-		error();
-	return (grid);
 }
 
 int		size_of_file(char *arg)
@@ -62,8 +38,6 @@ int		find_num_tetra(char *str)
 	size = size_of_file(str);
 	if (size == 0)
 		return (1);
-	if (size % 21 == 0)
-		num = size / 21;
 	else
 		num = (size / 21) + 1;
 	return (num);
@@ -72,7 +46,7 @@ int		find_num_tetra(char *str)
 int		main(int ac, char **av)
 {
 	int		num;
-	t_tetra list[26];
+	t_tetra list[MAX_TETRA];
 	char	a;
 	int		fd;
 
